@@ -36,7 +36,8 @@ dependencies {
     //compile 'com.android.support:appcompat-v7:25.3.1'
     compile "com.android.support:appcompat-v7:23.0.1"
     compile 'com.facebook.react:react-native:+'
-    compile 'com.getui:sdk:2.11.1.0'
     compile 'com.meizu.flyme.internet:push-internal:3.4.2@aar'
-    compile 'com.huawei.android.hms:push:2.5.2.300'
+    compile files('libs/HMS_SDK_2.5.3.302.jar')
+    compile files('libs/GetuiSDK2.11.1.0.jar')
+    compile files('libs/MiPush_SDK_Client_3_5_2.jar')
 }
