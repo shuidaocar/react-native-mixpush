@@ -37,17 +37,15 @@ public class GeTuiMessageIntentService  extends GTIntentService {
 
     @Override
     public void onReceiveMessageData(Context context, GTTransmitMessage msg) {
-        Toast.makeText(context, "收到消息", Toast.LENGTH_SHORT).show();
-        String message = new String(msg.getPayload());
-        final WritableMap param = Arguments.createMap();
-        param.putString("type", MixPushMoudle.EVENT_TYPE_PAYLOAD);
-        param.putString("payload", message);
+        //Toast.makeText(context, "收到消息", Toast.LENGTH_SHORT).show();
+        final String message = new String(msg.getPayload());
+        Log.e(TAG,"收到透传消息："+message);
         //GetuiModule.sendEvent(GetuiModule.EVENT_RECEIVE_REMOTE_NOTIFICATION, param);
         //Toast.makeText(context, "sendEvent",Toast.LENGTH_SHORT).show();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_REMOTE_NOTIFICATION, param);
+                MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_REMOTE_NOTIFICATION, message);
             }
         };
         Timer timer = new Timer();
