@@ -6,6 +6,7 @@
 
 注：本项目仅适用于android平台(ios统一的apns推送机制较为稳定,只需自行选择一种推送集成即可)。
 
+>QQ交流群：516032289
 
 # 安装：
 
@@ -117,7 +118,7 @@
     NativeAppEventEmitter.addListener(
             'receiveRemoteNotification',
             (notification) => {
-                    Alert.alert('消息通知',notification);
+                    Alert.alert('消息通知',JSON.stringify(notification));
             }
     );
 
@@ -125,18 +126,16 @@
 
     import MixPush from 'react-native-mixpush-android';
     
-   - MixPush.setAlias(alias); //设置别名
-   - MixPush.unsetAlias(alias); //取消设置别名
-   - MixPush.setTags(tags); //设置用户标签
-   - MixPush.unsetTags(tags); //取消设置用户标签
-   - MixPush.getClientId(); //获取客户端ID 
-   
->以上方法均不支持华为手机
-
-
-说明：getClientId获取到的ID为用户在推送平台的唯一标识（小米：regId，魅族：pushId;个推：clientId），用于定向推送;
-
-
+    MixPush.setAlias(alias); //设置别名<br>
+    MixPush.unsetAlias(alias); //取消设置别名<br>
+    MixPush.setTags(tags); //设置用户标签<br>
+    MixPush.unsetTags(tags); //取消设置用户标签<br>
+    MixPush.getClientId(); //获取客户端ID<br>    
+>以上方法均不支持华为手机<br>
+    
+    
+    说明：getClientId获取到的ID为用户在推送平台的唯一标识（小米：regId，魅族：pushId;个推：clientId），用于定向推送;<br>
+    
 >此外,所有推送平台在APP推送注册成功后会往客户端发送一次注册成功事件(包含华为:deviceToken)，事件名为:"receiveClientId",并携带clientId,可使用该事件与getClientId方法配合使用达到获取clientId的目的。<br>
     
     实例：
@@ -153,49 +152,12 @@
              alert("cid:"+cid);//自行处理cid代码
         }
     );
-    
-## 8、客户端推送示例
-
-#### 小米推送
-
-![](https://github.com/wangheng3751/my-resources/blob/master/images/mupush.png?raw=true)
-
-***
-
-#### 华为推送
-
-![](https://github.com/wangheng3751/my-resources/blob/master/images/huaweipush1.png?raw=true)
-![](https://github.com/wangheng3751/my-resources/blob/master/images/huaweipush2.png?raw=true)
-
-***
-
-#### 魅族推送
-
-![](https://github.com/wangheng3751/my-resources/blob/master/images/meizupush.png?raw=true)
-
-***
-
-#### 个推推送
-
-![](https://github.com/wangheng3751/my-resources/blob/master/images/getui.png?raw=true)
-
-***
-
+        
 # 特别说明
 
-本项目参考了另外一个大神的开源项目 [joyrun/MixPush](https://github.com/joyrun/MixPush) !
+   本项目参考了另外一个大神的开源项目 
+   [joyrun/MixPush](https://github.com/joyrun/MixPush) !
     
-由于本人非原生开发者,不妥之处请指正,邮箱：wangheng3751@qq.com !
+  由于本人非原生开发者,不妥之处请指正,邮箱：wangheng3751@qq.com !
   
-目前项目处于持续完善更新中...
-
->QQ交流群：516032289
-
-# 附录
-- [华为推送官方文档](http://developer.huawei.com/consumer/cn/service/hms/catalog/huaweipush_agent.html?page=hmssdk_huaweipush_devguide_client_agent) : http://developer.huawei.com/consumer/cn/service/hms/catalog/huaweipush_agent.html?page=hmssdk_huaweipush_devguide_client_agent
-
-- [小米推送官方文档](https://dev.mi.com/console/doc/detail?pId=41) : https://dev.mi.com/console/doc/detail?pId=41
-
-- [魅族推送官方文档](https://github.com/MEIZUPUSH/PushDemo) : https://github.com/MEIZUPUSH/PushDemo
-
-- [个推推送官方文档](http://docs.getui.com/getui/mobile/android/androidstudio_maven/) : http://docs.getui.com/getui/mobile/android/androidstudio_maven/
+  目前项目处于持续完善更新中...
