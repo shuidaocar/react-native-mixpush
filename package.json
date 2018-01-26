@@ -1,22 +1,42 @@
 ﻿{
-  "name": "react-native-mixpush-android",
-  "version": "1.0.7",
-  "description": "集成小米推送、华为推送、魅族推送及个推推送的React-Native版本!",
-  "main": "index.js",
-  "keywords": [
-    "push","mixpush","react-native-push"
+  "_from": "git+https://github.com/shuidaocar/react-native-mixpush.git",
+  "_id": "react-native-mixpush@1.0.0",
+  "_inBundle": false,
+  "_location": "/react-native-mixpush",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "react-native-mixpush@git+https://github.com/shuidaocar/react-native-mixpush.git",
+    "name": "react-native-mixpush",
+    "escapedName": "react-native-mixpush",
+    "rawSpec": "git+https://github.com/shuidaocar/react-native-mixpush.git",
+    "saveSpec": "git+https://github.com/shuidaocar/react-native-mixpush.git",
+    "fetchSpec": "https://github.com/shuidaocar/react-native-mixpush.git",
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "/"
   ],
+  "_resolved": "git+https://github.com/shuidaocar/react-native-mixpush.git#495934ac006f09eb01c5bf7309d369c6233f7901",
+  "_spec": "react-native-mixpush@git+https://github.com/shuidaocar/react-native-mixpush.git",
+  "_where": "/Users/hanchengtan/shuidao/auto-market",
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/jiushicheng/react-native-mixpush/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "集成小米推送、华为推送、魅族推送及个推推送的React-Native版本!",
+  "homepage": "https://github.com/jiushicheng/react-native-mixpush#readme",
+  "license": "ISC",
+  "main": "index.js",
+  "name": "react-native-mixpush",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jiushicheng/react-native-mixpush.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/wangheng3751/react-native-mixpush.git"
-  },
-  "author": "wangheng3751",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/wangheng3751/react-native-mixpush/issues"
-  },
-  "homepage": "https://github.com/wangheng3751/react-native-mixpush#readme"
+  "version": "1.0.0"
 }
