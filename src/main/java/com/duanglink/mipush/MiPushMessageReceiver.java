@@ -71,6 +71,14 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
     public void onNotificationMessageArrived(Context context, MiPushMessage message) {
         mMessage = message.getContent();
         Log.i(TAG, "收到通知栏消息： " + mMessage);
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_REMOTE_NOTIFICATION, mMessage);
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(task, 1000);
     }
 
     @Override
