@@ -62,8 +62,8 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
                 break;
             default:
                 MiPushManager newmipush=new MiPushManager(savedInstanceState.getString("xiaomiAppId"),savedInstanceState.getString("xiaomiAppKey"));
-                MixPushMoudle.pushManager=mipush;
-                mipush.registerPush(this.getApplicationContext());
+                MixPushMoudle.pushManager=newmipush;
+                newmipush.registerPush(this.getApplicationContext());
                 break;
         }
     }
