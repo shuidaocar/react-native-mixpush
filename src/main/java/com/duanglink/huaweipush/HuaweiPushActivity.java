@@ -61,9 +61,9 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
                 meizupush.registerPush(this.getApplicationContext());
                 break;
             default:
-                GeTuiManager getui=new GeTuiManager();
-                MixPushMoudle.pushManager=getui;
-                getui.registerPush(this.getApplicationContext());
+                MiPushManager newmipush=new MiPushManager(savedInstanceState.getString("xiaomiAppId"),savedInstanceState.getString("xiaomiAppKey"));
+                MixPushMoudle.pushManager=mipush;
+                mipush.registerPush(this.getApplicationContext());
                 break;
         }
     }
