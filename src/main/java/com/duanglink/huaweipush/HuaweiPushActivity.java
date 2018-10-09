@@ -48,7 +48,7 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
                         .addConnectionCallbacks(this)
                         .addOnConnectionFailedListener(this)
                         .build();
-                client.connect();
+                client.connect(this);
                 break;
             case "xiaomi":
                 MiPushManager mipush=new MiPushManager(savedInstanceState.getString("xiaomiAppId"),savedInstanceState.getString("xiaomiAppKey"));
@@ -85,7 +85,7 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
         //HuaweiApiClient异常断开连接
         //if (!this.isDestroyed() && !this.isFinishing()) {
         if (!this.isFinishing()) {
-            client.connect();
+            client.connect(this);
         }
         Log.i(TAG, "HuaweiApiClient 连接断开");
     }
