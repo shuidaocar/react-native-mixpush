@@ -1,0 +1,33 @@
+package com.duanglink.mipush;
+
+public class Content {
+
+    String amount = "";
+    String msg_id = "";
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public String getMsg_id() {
+        return msg_id;
+    }
+
+    public void setMsg_id(String msg_id) {
+        this.msg_id = msg_id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    String title = "";
+}
