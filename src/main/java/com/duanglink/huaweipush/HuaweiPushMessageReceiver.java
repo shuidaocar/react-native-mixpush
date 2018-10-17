@@ -14,8 +14,6 @@ import com.igexin.sdk.PushManager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import com.google.gson.Gson;
-import com.yzy.voice.VoicePlay;
 
 import java.lang.reflect.Array;
 import java.util.Iterator;
@@ -52,10 +50,6 @@ public class HuaweiPushMessageReceiver extends PushReceiver {
             //CP可以自己解析消息内容，然后做相应的处理
             String content = new String(msg, "UTF-8");
             Log.i(TAG, "收到PUSH透传消息,消息内容为:" + content);
-            Gson gson =new Gson();
-            Content data = gson.fromJson(content,Content.class);
-            VoicePlay.with(context).play(data.getAmount());
-
             MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_REMOTE_NOTIFICATION, content);
         } catch (Exception e) {
             e.printStackTrace();

@@ -10,8 +10,6 @@ import com.xiaomi.mipush.sdk.MiPushCommandMessage;
 import com.xiaomi.mipush.sdk.MiPushMessage;
 import com.xiaomi.mipush.sdk.PushMessageReceiver;
 import org.json.JSONException;
-import com.google.gson.Gson;
-import com.yzy.voice.VoicePlay;
 import org.json.JSONObject;
 import java.util.List;
 import java.util.Map;
@@ -37,10 +35,6 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
     public void onReceivePassThroughMessage(Context context, MiPushMessage message) {
         mMessage = message.getContent();
         Log.i(TAG, "收到透传消息： " + mMessage);
-        Gson gson = new Gson();
-        Content content = gson.fromJson(mMessage,Content.class);
-        VoicePlay.with(context).play(content.getAmount());
-
         MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_REMOTE_NOTIFICATION, mMessage);
     }
     @Override
@@ -77,10 +71,6 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
     public void onNotificationMessageArrived(Context context, MiPushMessage message) {
         mMessage = message.getContent();
         Log.i(TAG, "收到通知栏消息： " + mMessage);
-        Gson gson = new Gson();
-        Content content = gson.fromJson(mMessage,Content.class);
-        VoicePlay.with(context).play(content.getAmount());
-
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
