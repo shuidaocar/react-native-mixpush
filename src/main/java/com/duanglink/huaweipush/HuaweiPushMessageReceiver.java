@@ -52,9 +52,13 @@ public class HuaweiPushMessageReceiver extends PushReceiver {
             //CP可以自己解析消息内容，然后做相应的处理
             String content = new String(msg, "UTF-8");
             Log.i(TAG, "收到PUSH透传消息,消息内容为:" + content);
-            Gson gson =new Gson();
-            Content data = gson.fromJson(content,Content.class);
-            VoicePlay.with(context).play(data.getAmount());
+            Gson gson = new Gson();
+            HuaweiContent data = gson.fromJson(content, HuaweiContent.class);
+            Log.i(TAG, "消息内容为:" + data.getContent());
+
+            if (data.getMsg_sub_type().equals("103")) {
+                VoicePlay.with(context).play(data.getContent());
+            }
 
             MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_REMOTE_NOTIFICATION, content);
         } catch (Exception e) {
