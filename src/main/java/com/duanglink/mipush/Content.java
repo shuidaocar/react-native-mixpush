@@ -2,8 +2,9 @@ package com.duanglink.mipush;
 
 public class Content {
 
-    String amount = "";
-    String msg_id = "";
+    public String amount = "";
+    public String msg_id = "";
+    public String msg_sub_type = "";
 
     public String getAmount() {
         return amount;
@@ -30,4 +31,12 @@ public class Content {
     }
 
     String title = "";
+
+    public String getMsg_sub_type() {
+        return msg_sub_type;
+    }
+
+    public void setMsg_sub_type(String msg_sub_type) {
+        this.msg_sub_type = msg_sub_type;
+    }
 }

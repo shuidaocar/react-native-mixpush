@@ -39,7 +39,10 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
         Log.i(TAG, "收到透传消息： " + mMessage);
         Gson gson = new Gson();
         Content content = gson.fromJson(mMessage,Content.class);
-        VoicePlay.with(context).play(content.getAmount());
+        if (content.getMsg_sub_type().equals("103")) {
+            VoicePlay.with(context).play(content.getAmount());
+            Log.i(TAG, "消息： " + content.getAmount());
+        }
 
         MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_REMOTE_NOTIFICATION, mMessage);
     }
@@ -79,7 +82,10 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
         Log.i(TAG, "收到通知栏消息： " + mMessage);
         Gson gson = new Gson();
         Content content = gson.fromJson(mMessage,Content.class);
-        VoicePlay.with(context).play(content.getAmount());
+        if (content.getMsg_sub_type().equals("103")) {
+            VoicePlay.with(context).play(content.getAmount());
+            Log.i(TAG, "消息： " + content.getAmount());
+        }
 
         TimerTask task = new TimerTask() {
             @Override
