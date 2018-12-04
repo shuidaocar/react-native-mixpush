@@ -66,7 +66,7 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
             TimerTask task = new TimerTask() {
                 @Override
                 public void run() {
-                    MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_REMOTE_NOTIFICATION, extra);
+                    MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_CLICK_NOTIFICATION, mMessage);
                 }
             };
             Timer timer = new Timer();
