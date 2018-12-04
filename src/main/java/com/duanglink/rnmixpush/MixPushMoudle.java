@@ -22,6 +22,8 @@ import java.io.IOException;
  */
 public class MixPushMoudle extends ReactContextBaseJavaModule {
     public static final String EVENT_RECEIVE_REMOTE_NOTIFICATION = "receiveRemoteNotification";
+    public static final String EVENT_RECEIVE_CLICK_NOTIFICATION = "receiveClickNotification";
+    
     public static final String EVENT_TYPE_PAYLOAD = "payload";
     public static final String EVENT_RECEIVE_CLIENTID ="receiveClientId";
     private static ReactApplicationContext mRAC;

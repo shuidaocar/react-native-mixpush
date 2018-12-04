@@ -76,7 +76,7 @@ public class HuaweiPushMessageReceiver extends PushReceiver {
             TimerTask task = new TimerTask() {
                 @Override
                 public void run() {
-                    MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_REMOTE_NOTIFICATION, content);
+                    MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_CLICK_NOTIFICATION, content);
                 }
             };
             Timer timer = new Timer();
