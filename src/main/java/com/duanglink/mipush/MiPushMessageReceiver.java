@@ -56,8 +56,9 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
             //启动应用
             Intent launchIntent = context.getPackageManager().
                     getLaunchIntentForPackage(context.getPackageName());
-            launchIntent.setFlags(
-                    Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+             if (launchIntent != null) {
+                launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            }
             context.startActivity(launchIntent);
             //发送事件
             //MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_REMOTE_NOTIFICATION, mMessage);
