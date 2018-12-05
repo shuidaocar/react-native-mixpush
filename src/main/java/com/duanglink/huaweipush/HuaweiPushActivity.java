@@ -36,35 +36,39 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        String brand= Build.BRAND.toLowerCase();
-        //手机型号接入判断
-        switch (brand){
-            case "huawei":
-                MixPushMoudle.pushManager=new HuaweiPushManager("","");
-                //连接回调以及连接失败监听
-                client = new HuaweiApiClient.Builder(this)
-                        .addApi(HuaweiPush.PUSH_API)
-                        .addConnectionCallbacks(this)
-                        .addOnConnectionFailedListener(this)
-                        .build();
-                client.connect(this);
-                break;
-            case "xiaomi":
-                MiPushManager mipush=new MiPushManager(savedInstanceState.getString("xiaomiAppId"),savedInstanceState.getString("xiaomiAppKey"));
-                MixPushMoudle.pushManager=mipush;
-                mipush.registerPush(this.getApplicationContext());
-                break;
-            case "meizu":
-                FlymePushManager meizupush=new FlymePushManager(savedInstanceState.getString("meizuAppId"),savedInstanceState.getString("meizuAppKey"));
-                MixPushMoudle.pushManager=meizupush;
-                meizupush.registerPush(this.getApplicationContext());
-                break;
-            default:
-                MiPushManager newmipush=new MiPushManager(savedInstanceState.getString("xiaomiAppId"),savedInstanceState.getString("xiaomiAppKey"));
-                MixPushMoudle.pushManager=newmipush;
-                newmipush.registerPush(this.getApplicationContext());
-                break;
+         try {
+            super.onCreate(savedInstanceState);
+            String brand = Build.BRAND.toLowerCase();
+            //手机型号接入判断
+            switch (brand) {
+                case "huawei":
+                    MixPushMoudle.pushManager = new HuaweiPushManager("", "");
+                    //连接回调以及连接失败监听
+                    client = new HuaweiApiClient.Builder(this)
+                            .addApi(HuaweiPush.PUSH_API)
+                            .addConnectionCallbacks(this)
+                            .addOnConnectionFailedListener(this)
+                            .build();
+                    client.connect(this);
+                    break;
+//                case "xiaomi":
+//                    MiPushManager mipush = new MiPushManager(savedInstanceState.getString("xiaomiAppId"), savedInstanceState.getString("xiaomiAppKey"));
+//                    MixPushMoudle.pushManager = mipush;
+//                    mipush.registerPush(this.getApplicationContext());
+//                    break;
+//                case "meizu":
+//                    FlymePushManager meizupush = new FlymePushManager(savedInstanceState.getString("meizuAppId"), savedInstanceState.getString("meizuAppKey"));
+//                    MixPushMoudle.pushManager = meizupush;
+//                    meizupush.registerPush(this.getApplicationContext());
+//                    break;
+                default:
+                    MiPushManager mipush = new MiPushManager(savedInstanceState.getString("xiaomiAppId"), savedInstanceState.getString("xiaomiAppKey"));
+                    MixPushMoudle.pushManager = mipush;
+                    mipush.registerPush(this.getApplicationContext());
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
