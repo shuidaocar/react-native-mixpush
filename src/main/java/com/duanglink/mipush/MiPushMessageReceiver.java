@@ -23,6 +23,7 @@ import java.util.TimerTask;
  */
 public class MiPushMessageReceiver extends PushMessageReceiver {
     private static final String TAG = "MiPushMessageReceiver";
+    private static final int MSG = 1;
     private String mRegId;
     private long mResultCode = -1;
     private String mReason;
@@ -46,6 +47,27 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
 
         MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_REMOTE_NOTIFICATION, mMessage);
     }
+    
+     private Handler handler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            switch (msg.what) {
+                case MSG:
+                    doPolling(Content.finishStart);
+                    break;
+            }
+        }
+    };
+
+    private void doPolling(Boolean isFirst) {
+        if (isFirst) {
+            MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_CLICK_NOTIFICATION, mMessage);
+            handler.removeMessages(MSG);
+            return;
+        }
+        handler.sendEmptyMessageDelayed(MSG, 200);
+    }
+    
     @Override
     public void onNotificationMessageClicked(Context context, MiPushMessage message)  {
         mMessage = message.getContent();
@@ -60,19 +82,10 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
                 launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             }
             context.startActivity(launchIntent);
-            //发送事件
-            //MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_REMOTE_NOTIFICATION, mMessage);
-            //todo
-            //延时1秒再发送事件 等待app初始化完成 1s这个事件待定
-            TimerTask task = new TimerTask() {
-                @Override
-                public void run() {
-                    MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_CLICK_NOTIFICATION, mMessage);
-                }
-            };
-            Timer timer = new Timer();
-            timer.schedule(task, 1000);
-
+            Looper.prepare();
+            Message msg = new Message();
+            msg.what = MSG;
+            handler.sendMessage(msg);
         }catch (JSONException e){
 
         }
