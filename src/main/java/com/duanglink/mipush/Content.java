@@ -1,7 +1,7 @@
 package com.duanglink.mipush;
 
 public class Content {
-
+    public static boolean finishStart = false;
     public String amount = "";
     public String msg_id = "";
     public String msg_sub_type = "";
