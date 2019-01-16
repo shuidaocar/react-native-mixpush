@@ -23,8 +23,8 @@ import java.util.List;
  * Created by wangheng on 2017/11/22.
  */
 public class HuaweiPushManager implements MixPushManager {
-    private static String appId="100147479";
-    private static String appSecret="4fd1cf7269547184941d584ee6063f0d";
+    private static String appId="";
+    private static String appSecret="";
     public static final String NAME = "huaweipush";
 
     public HuaweiPushManager(String appId, String appSecret) {
