@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.duanglink.rn_mixpush_android">
+          package="com.duanglink.rn_mixpush_android">
 
     <uses-permission android:name="android.permission.VIBRATE"/>
     <!--推送权限 华为-->
@@ -13,24 +13,29 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <!--推送权限 华为END-->
-
+    <uses-permission android:name="android.permission.GET_TASKS"/>
     <application android:allowBackup="true" android:label="@string/app_name"
-        android:supportsRtl="true">
+                 android:supportsRtl="true">
         <!-- 个推-->
         <service android:name="com.duanglink.getui.GeTuiMessageIntentService"/>
         <!--华为推送配置begin-->
         <activity
-            android:name="com.huawei.hms.activity.BridgeActivity"
-            android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
-            android:excludeFromRecents="true"
-            android:exported="false"
-            android:hardwareAccelerated="true"
-            android:theme="@android:style/Theme.Translucent" >
+                android:name="com.huawei.hms.activity.BridgeActivity"
+                android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
+                android:excludeFromRecents="true"
+                android:enabled="true"
+                android:exported="false"
+                android:hardwareAccelerated="true"
+                android:theme="@android:style/Theme.Translucent" >
             <meta-data
-                android:name="hwc-theme"
-                android:value="androidhwext:style/Theme.Emui.Translucent" />
+                    android:name="hwc-theme"
+                    android:value="androidhwext:style/Theme.Emui.Translucent" />
         </activity>
-        <receiver android:name="com.duanglink.huaweipush.HuaweiPushMessageReceiver" >
+
+
+        <receiver
+                android:enabled="true"
+                android:name="com.duanglink.huaweipush.HuaweiPushMessageReceiver" >
             <intent-filter>
                 <!-- 必须,用于接收TOKEN -->
                 <action android:name="com.huawei.android.push.intent.REGISTRATION" />
@@ -42,7 +47,9 @@
                 <action android:name="com.huawei.intent.action.PUSH_STATE" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.huawei.hms.support.api.push.PushEventReceiver" >
+        <receiver
+                android:enabled="true"
+                android:name="com.huawei.hms.support.api.push.PushEventReceiver" >
             <intent-filter>
                 <!-- 接收通道发来的通知栏消息，兼容老版本PUSH -->
                 <action android:name="com.huawei.intent.action.PUSH" />
@@ -65,8 +72,8 @@
         </receiver>
 
         <receiver
-            android:exported="true"
-            android:name="com.duanglink.mipush.MiPushMessageReceiver">
+                android:exported="true"
+                android:name="com.duanglink.mipush.MiPushMessageReceiver">
             <intent-filter>
                 <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
             </intent-filter>
