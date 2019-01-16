@@ -1,5 +1,7 @@
 package com.duanglink.huaweipush;
+
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -23,6 +25,7 @@ import com.huawei.hms.support.api.push.HuaweiPush;
 import com.huawei.hms.support.api.push.PushException;
 import com.huawei.hms.support.api.push.TokenResult;
 import com.duanglink.getui.GeTuiManager;
+
 import java.util.List;
 
 /**
@@ -36,6 +39,7 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         try {
             super.onCreate(savedInstanceState);
             String brand= Build.BRAND.toLowerCase();
@@ -43,6 +47,7 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
             switch (brand){
                 case "huawei":
                     MixPushMoudle.pushManager=new HuaweiPushManager("","");
+
                     //连接回调以及连接失败监听
                     client = new HuaweiApiClient.Builder(this)
                             .addApi(HuaweiPush.PUSH_API)
@@ -51,25 +56,27 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
                             .build();
                     client.connect(this);
                     break;
-                case "xiaomi":
-                    MiPushManager mipush=new MiPushManager(savedInstanceState.getString("xiaomiAppId"),savedInstanceState.getString("xiaomiAppKey"));
-                    MixPushMoudle.pushManager=mipush;
-                    mipush.registerPush(this.getApplicationContext());
-                    break;
-                case "meizu":
-                    FlymePushManager meizupush=new FlymePushManager(savedInstanceState.getString("meizuAppId"),savedInstanceState.getString("meizuAppKey"));
-                    MixPushMoudle.pushManager=meizupush;
-                    meizupush.registerPush(this.getApplicationContext());
-                    break;
+
+//                case "xiaomi":
+//                    MiPushManager mipush = new MiPushManager(savedInstanceState.getString("xiaomiAppId"), savedInstanceState.getString("xiaomiAppKey"));
+//                    MixPushMoudle.pushManager = mipush;
+//                    mipush.registerPush(this.getApplicationContext());
+//                    break;
+//                case "meizu":
+//                    FlymePushManager meizupush = new FlymePushManager(savedInstanceState.getString("meizuAppId"), savedInstanceState.getString("meizuAppKey"));
+//                    MixPushMoudle.pushManager = meizupush;
+//                    meizupush.registerPush(this.getApplicationContext());
+//                    break;
                 default:
-                    MiPushManager newmipush=new MiPushManager(savedInstanceState.getString("xiaomiAppId"),savedInstanceState.getString("xiaomiAppKey"));
-                    MixPushMoudle.pushManager=newmipush;
-                    newmipush.registerPush(this.getApplicationContext());
+                    MiPushManager mipush = new MiPushManager(savedInstanceState.getString("xiaomiAppId"), savedInstanceState.getString("xiaomiAppKey"));
+                    MixPushMoudle.pushManager = mipush;
+                    mipush.registerPush(this.getApplicationContext());
                     break;
             }
         } catch (Exception e) {
-          e.printStackTrace();
+            e.printStackTrace();
         }
+
     }
 
     @Override
@@ -97,7 +104,7 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
     @Override
     public void onConnectionFailed(ConnectionResult arg0) {
         Log.i(TAG, "HuaweiApiClient连接失败，错误码：" + arg0.getErrorCode());
-        if(HuaweiApiAvailability.getInstance().isUserResolvableError(arg0.getErrorCode())) {
+        if (HuaweiApiAvailability.getInstance().isUserResolvableError(arg0.getErrorCode())) {
             HuaweiApiAvailability.getInstance().resolveError(this, arg0.getErrorCode(), REQUEST_HMS_RESOLVE_ERROR);
         } else {
             //其他错误码请参见开发指南或者API文档
@@ -109,7 +116,7 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
         super.onDestroy();
         //建议在onDestroy的时候停止连接华为移动服务
         //业务可以根据自己业务的形态来确定client的连接和断开的时机，但是确保connect和disconnect必须成对出现
-        if(client!=null)client.disconnect();
+        if (client != null) client.disconnect();
     }
 
     private void getTokenAsyn() {
@@ -117,10 +124,9 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
         tokenResult.setResultCallback(new ResultCallback<TokenResult>() {
             @Override
             public void onResult(TokenResult result) {
-                if(result.getTokenRes().getRetCode() == 0) {
+                if (result.getTokenRes().getRetCode() == 0) {
                     Log.i(TAG, "获取Token成功");
-                }
-                else{
+                } else {
                     Log.i(TAG, "获取Token失败");
                 }
             }
@@ -143,7 +149,9 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
         new Thread() {
             public void run() {
                 HuaweiPush.HuaweiPushApi.getPushState(client);
-            };
+            }
+
+            ;
         }.start();
     }
 }
