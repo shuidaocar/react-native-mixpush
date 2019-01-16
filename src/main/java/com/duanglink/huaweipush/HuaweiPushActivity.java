@@ -42,11 +42,12 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
 
         try {
             super.onCreate(savedInstanceState);
-            String brand = Build.BRAND.toLowerCase();
+            String brand= Build.BRAND.toLowerCase();
             //手机型号接入判断
-            switch (brand) {
+            switch (brand){
                 case "huawei":
-                    MixPushMoudle.pushManager = new HuaweiPushManager("", "");
+                    MixPushMoudle.pushManager=new HuaweiPushManager("","");
+
                     //连接回调以及连接失败监听
                     client = new HuaweiApiClient.Builder(this)
                             .addApi(HuaweiPush.PUSH_API)
@@ -55,6 +56,7 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
                             .build();
                     client.connect(this);
                     break;
+
 //                case "xiaomi":
 //                    MiPushManager mipush = new MiPushManager(savedInstanceState.getString("xiaomiAppId"), savedInstanceState.getString("xiaomiAppKey"));
 //                    MixPushMoudle.pushManager = mipush;
