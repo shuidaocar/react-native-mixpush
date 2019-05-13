@@ -42,7 +42,7 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
 
         try {
             super.onCreate(savedInstanceState);
-            String brand= Build.BRAND.toLowerCase();
+            String brand = Build.MANUFACTURER.toLowerCase();
             //手机型号接入判断
             switch (brand){
                 case "huawei":
