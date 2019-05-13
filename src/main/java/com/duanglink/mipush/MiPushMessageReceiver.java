@@ -172,14 +172,14 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
                 if (message.getResultCode() == ErrorCode.SUCCESS) {
                     mRegId = cmdArg1;
                     Log.i(TAG, "得到RegId： " + mRegId);
-//                     TimerTask task = new TimerTask() {
-//                         @Override
-//                         public void run() {
-//                             MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_CLIENTID, mRegId);
-//                         }
-//                     };
-//                     Timer timer = new Timer();
-//                     timer.schedule(task, 1000);
+                    TimerTask task = new TimerTask() {
+                        @Override
+                        public void run() {
+                            MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_CLIENTID, mRegId);
+                        }
+                    };
+                    Timer timer = new Timer();
+                    timer.schedule(task, 1000);
                 }
             }
         } catch (Exception e) {

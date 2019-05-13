@@ -32,7 +32,11 @@ public class MixPushMoudle extends ReactContextBaseJavaModule {
         super(reactContext);
         mRAC=reactContext;
     }
-    @Override
+
+    public static boolean isInit() {
+        return mRAC != null && mRAC.hasActiveCatalystInstance();
+    }
+  @Override
     public String getName() {
         return "MixPushModule";
     }
@@ -48,8 +52,10 @@ public class MixPushMoudle extends ReactContextBaseJavaModule {
     }
 
     public static void sendEvent(String eventName, @Nullable String params){
-        mRAC.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+        if(isInit()) {
+            mRAC.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit(eventName, params);
+        }
     }
 
     @ReactMethod
