@@ -34,7 +34,7 @@ public class HuaweiPushMessageReceiver extends PushReceiver {
     public static final String ACTION_UPDATEUI = "action.updateUI";
     private String content;
     @Override
-    public void onToken(Context context, String token, Bundle extras) {
+    public void onToken(final Context context, final String token, final Bundle extras) {
         Log.i(TAG, "得到Token为:" + token);
         //Toast.makeText(context, "Token为:" + token, Toast.LENGTH_SHORT).show();
         //MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_CLIENTID, token);
@@ -44,7 +44,11 @@ public class HuaweiPushMessageReceiver extends PushReceiver {
             TimerTask task = new TimerTask() {
                 @Override
                 public void run() {
-                    MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_CLIENTID, stoken);
+                    if(MixPushMoudle.isInit()) {
+                        MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_CLIENTID, stoken);
+                    }else{
+                        onToken(context, token, extras);
+                    }
                 }
             };
             Timer timer = new Timer();
