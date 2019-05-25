@@ -67,20 +67,25 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
                 case MSG:
-                    doPolling(Content.finishStart);
+                    doPolling();
                     break;
             }
         }
     };
 
-    private void doPolling(Boolean isFirst) {
-        Log.i("====>doPolling", isFirst+ "");
-        if (isFirst) {
-            MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_CLICK_NOTIFICATION, mMessage);
-            handler.removeMessages(MSG);
-            return;
-        }
-        handler.sendEmptyMessageDelayed(MSG, 500);
+    private void doPolling() {
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                if(MixPushMoudle.isInit()) {
+                    MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_CLICK_NOTIFICATION, mMessage);
+                }else{
+                    doPolling();
+                }
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(task, 1000);
     }
 
     @Override
@@ -97,7 +102,8 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
                 launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             }
             context.startActivity(launchIntent);
-            Looper.prepare();
+            //注释以下代码修复小米推送只有第一个推送点击可以进到详情页的问题
+            //Looper.prepare();
             Message msg = new Message();
             msg.what = MSG;
             handler.sendMessage(msg);
@@ -170,7 +176,7 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
             String cmdArg2 = ((arguments != null && arguments.size() > 1) ? arguments.get(1) : null);
             if (MiPushClient.COMMAND_REGISTER.equals(command)) {
                 if (message.getResultCode() == ErrorCode.SUCCESS) {
-                    mRegId = cmdArg1;
+                        mRegId = cmdArg1;
                     Log.i(TAG, "得到RegId： " + mRegId);
 //                     TimerTask task = new TimerTask() {
 //                         @Override
