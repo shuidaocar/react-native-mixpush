@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.regex.Pattern;
 
 /**
  * Created by wangheng on 2017/11/22.
@@ -53,11 +54,19 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
         Log.i(TAG, "收到透传消息11： " + message.toString());
 
         Log.i(TAG, "收到透传消息： " + mMessage);
-        Gson gson = new Gson();
-        Content content = gson.fromJson(mMessage, Content.class);
-        if (content.getMsg_sub_type().equals("103")) {
-            VoicePlay.with(context).play(content.getAmount());
-            Log.i(TAG, "消息： " + content.getAmount());
+
+        String pattern = ".*daotian\\.repair.*";
+        boolean isMatch = Pattern.matches(pattern, context.getPackageName());
+        
+        Log.i(TAG, "正则匹配管家端包名：" + isMatch);
+        
+        if(isMatch) {
+            Gson gson = new Gson();
+            Content content = gson.fromJson(mMessage, Content.class);
+            if (content.getMsg_sub_type().equals("103")) {
+                VoicePlay.with(context).play(content.getAmount());
+                Log.i(TAG, "消息： " + content.getAmount());
+            }
         }
         MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_REMOTE_NOTIFICATION, mMessage);
     }
