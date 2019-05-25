@@ -55,8 +55,8 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
 
         Log.i(TAG, "收到透传消息： " + mMessage);
 
-        String pattern = ".*daotian\\.repair.*";
-        boolean isMatch = Pattern.matches(pattern, context.getPackageName());
+        String pattern = "com.shuidao.daotian.repair";
+        boolean isMatch = context.getPackageName().indexOf(pattern) == -1 ? false : true;
         
         Log.i(TAG, "正则匹配管家端包名：" + isMatch);
         
