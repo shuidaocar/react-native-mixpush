@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.regex.Pattern;
 
 /**
  * Created by wangheng on 2017/11/22.
@@ -53,11 +54,19 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
         Log.i(TAG, "收到透传消息11： " + message.toString());
 
         Log.i(TAG, "收到透传消息： " + mMessage);
-        Gson gson = new Gson();
-        Content content = gson.fromJson(mMessage, Content.class);
-        if (content.getMsg_sub_type().equals("103")) {
-            VoicePlay.with(context).play(content.getAmount());
-            Log.i(TAG, "消息： " + content.getAmount());
+
+        String pattern = "com.shuidao.daotian.repair";
+        boolean isMatch = context.getPackageName().indexOf(pattern) == -1 ? false : true;
+        
+        Log.i(TAG, "正则匹配管家端包名：" + isMatch);
+        
+        if(isMatch) {
+            Gson gson = new Gson();
+            Content content = gson.fromJson(mMessage, Content.class);
+            if (content.getMsg_sub_type().equals("103")) {
+                VoicePlay.with(context).play(content.getAmount());
+                Log.i(TAG, "消息： " + content.getAmount());
+            }
         }
         MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_REMOTE_NOTIFICATION, mMessage);
     }
@@ -67,20 +76,25 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
                 case MSG:
-                    doPolling(Content.finishStart);
+                    doPolling();
                     break;
             }
         }
     };
 
-    private void doPolling(Boolean isFirst) {
-        Log.i("====>doPolling", isFirst+ "");
-        if (isFirst) {
-            MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_CLICK_NOTIFICATION, mMessage);
-            handler.removeMessages(MSG);
-            return;
-        }
-        handler.sendEmptyMessageDelayed(MSG, 500);
+    private void doPolling() {
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                if(MixPushMoudle.isInit()) {
+                    MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_CLICK_NOTIFICATION, mMessage);
+                }else{
+                    doPolling();
+                }
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(task, 1000);
     }
 
     @Override
@@ -97,7 +111,8 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
                 launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             }
             context.startActivity(launchIntent);
-            Looper.prepare();
+            //注释以下代码修复小米推送只有第一个推送点击可以进到详情页的问题
+            //Looper.prepare();
             Message msg = new Message();
             msg.what = MSG;
             handler.sendMessage(msg);
@@ -170,7 +185,7 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
             String cmdArg2 = ((arguments != null && arguments.size() > 1) ? arguments.get(1) : null);
             if (MiPushClient.COMMAND_REGISTER.equals(command)) {
                 if (message.getResultCode() == ErrorCode.SUCCESS) {
-                    mRegId = cmdArg1;
+                        mRegId = cmdArg1;
                     Log.i(TAG, "得到RegId： " + mRegId);
                     TimerTask task = new TimerTask() {
                         @Override
